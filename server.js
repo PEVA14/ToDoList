@@ -6,6 +6,20 @@ const db      = require('./db');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
+// Crea la tabla si no existe al arrancar el servidor
+async function initDB() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS tasks (
+      id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      title      VARCHAR(255) NOT NULL,
+      completed  TINYINT(1)   NOT NULL DEFAULT 0,
+      created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  console.log('Tabla tasks lista');
+}
+initDB().catch(err => console.error('Error creando tabla:', err));
+
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
