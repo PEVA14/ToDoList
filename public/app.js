@@ -1,4 +1,3 @@
-// Api
 const API_URL = '/api/tasks';
 
 document.addEventListener('DOMContentLoaded', loadTasks);
@@ -33,7 +32,6 @@ document.getElementById('taskForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Obtener tareas
 async function loadTasks() {
   try {
     const res   = await fetch(API_URL);
@@ -44,7 +42,6 @@ async function loadTasks() {
   }
 }
 
-// ── Renderizar la lista de tareas en el HTML ──────────────────────────────────
 function renderTasks(tasks) {
   const list         = document.getElementById('taskList');
   const emptyMessage = document.getElementById('emptyMessage');
@@ -79,14 +76,12 @@ function renderTasks(tasks) {
           <button
             class="btn btn-sm ${task.completed ? 'btn-secondary' : 'btn-success'}"
             onclick="toggleTask(${task.id})"
-            title="${task.completed ? 'Marcar como pendiente' : 'Marcar como completada'}"
           >
             ${task.completed ? 'Undo' : '✓ Done'}
           </button>
           <button
             class="btn btn-sm btn-danger"
             onclick="deleteTask(${task.id})"
-            title="Eliminar tarea"
           >
             Delete
           </button>
@@ -98,7 +93,6 @@ function renderTasks(tasks) {
   });
 }
 
-// Completed/pending
 async function toggleTask(id) {
   try {
     const res = await fetch(`${API_URL}/${id}/toggle`, { method: 'PUT' });
@@ -108,7 +102,6 @@ async function toggleTask(id) {
   }
 }
 
-// Elim task
 async function deleteTask(id) {
   if (!confirm('¿Seguro que quieres eliminar esta tarea?')) return;
 
@@ -126,7 +119,6 @@ function showFormError(msg) {
   errorDiv.classList.remove('d-none');
 }
 
-// 
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.appendChild(document.createTextNode(text));
